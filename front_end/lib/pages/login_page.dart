@@ -1,6 +1,10 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, sort_child_properties_last
-
+// ignore_for_file: prefer_const_constructors, avoid_print, sort_child_properties_last, depend_on_referenced_packages, use_build_context_synchronously
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:front_end/pages/home_page.dart';
+import 'package:front_end/config.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +15,39 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool passenable = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  late SharedPreferences prefs;
+  @override
+  void initState() {
+    super.initState();
+    initSharedPref();
+  }
+
+  void initSharedPref() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  void loginUser() async {
+    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+      var reqBody = {
+        "email": emailController.text,
+        "password": passwordController.text
+      };
+      var response = await http.post(Uri.parse(login),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(reqBody));
+      var jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['status']) {
+        var myToken = jsonResponse['token'];
+        prefs.setString('token', myToken);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      } else {
+        print('Something went wrong');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
