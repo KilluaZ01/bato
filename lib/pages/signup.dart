@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, duplicate_ignore
 
 import 'package:flutter/material.dart';
 
@@ -130,28 +130,92 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
-            /*... Padding(
-              padding: const EdgeInsets.only(bottom: 15, left: 20, right: 20),
-              child: TextField(
-                 Image.asset(
-                  'lib/Assets/Google.png',
-                    height: 24,
-                  ),
 
-                decoration: InputDecoration(
-                  labelText: 'Enter your Full Name',
-                  labelStyle:
-                      TextStyle(color: Color.fromRGBO(142, 142, 142, 1)),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 6, horizontal: 15),
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Color.fromARGB(255, 40, 40, 40),
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    shadowColor: Colors.greenAccent,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'lib/Assets/Google.png',
+                        width: 24,
+                        height: 24,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Continue with Google',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
                 ),
-                style: TextStyle(
-                    fontSize: 20, color: Color.fromARGB(255, 222, 222, 222)),
-                
               ),
-            ),---*/
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Color.fromARGB(255, 40, 40, 40),
+                    backgroundColor: const Color.fromARGB(255, 24, 119, 242),
+                    shadowColor: Colors.greenAccent,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'lib/Assets/Facebook.png',
+                        width: 24,
+                        height: 24,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Continue with Facebook',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              // ignore: sort_child_properties_last
+              children: <Widget>[
+                const Text(
+                  'Already have a Bato account?',
+                  style: TextStyle(fontSize: 15, color: Color(0xFFE2E2E2)),
+                ),
+                TextButton(
+                  child: const Text(
+                    'Log in',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () {
+                    //signup screen
+                  },
+                )
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
           ],
         ));
   }
