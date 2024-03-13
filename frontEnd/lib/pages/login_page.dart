@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:front_end/pages/home_page.dart';
+import 'package:front_end/pages/home.dart';
 import 'package:front_end/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late SharedPreferences prefs;
+  bool _isNotValidate = false;
   @override
   void initState() {
     super.initState();
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         var myToken = jsonResponse['token'];
         prefs.setString('token', myToken);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
       } else {
         print('Something went wrong');
       }
@@ -66,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 15, left: 20, right: 20),
             child: TextField(
+              controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Enter Phone number or Email',
                 labelStyle: TextStyle(color: Color.fromRGBO(142, 142, 142, 1)),
@@ -73,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                     OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                errorText: _isNotValidate ? "Enter valid email" : null,
               ),
               style: TextStyle(
                   fontSize: 20, color: Color.fromARGB(255, 222, 222, 222)),
@@ -81,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: TextField(
+              controller: passwordController,
               obscureText: passenable,
               decoration: InputDecoration(
                 labelText: "Enter Password",
@@ -104,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 6, horizontal: 15),
+                errorText: _isNotValidate ? "Enter valid password" : null,
               ),
               style: TextStyle(
                 fontSize: 20,
@@ -136,7 +141,9 @@ class _LoginPageState extends State<LoginPage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  loginUser();
+                },
                 child: Text(
                   'Login',
                   style: TextStyle(fontSize: 16),
